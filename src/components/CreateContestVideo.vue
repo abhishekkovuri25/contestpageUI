@@ -46,13 +46,13 @@ export default {
   methods: {
     createContest: function() {
         var limit=localStorage.getItem("number");
+        var names= JSON.parse(localStorage.getItem("array"))
         limit=0.2*limit;
       if (this.selectedParks.length == limit) {
         for (var i = 0; i < this.selectedParks.length; i++) {
-          this.selectedParks[i] = this.selectedParks[i].qid;
-          console.log(this.selectedParks[i]);
-          
+          names.push(this.selectedParks[i]);            
         }
+        localStorage.setItem("array",JSON.stringify(names));
         alert(" The questions have been submitted");
         this.$router.push("/createcontestaudio");
         }
