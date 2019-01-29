@@ -1,12 +1,12 @@
 <template>
-  <b-container class="margin">
+  <b-container class="margin" required>
     <b-row>
       <b-col md="4" offset-md="4" style="text-align:center; font-size:180%">Create Contest</b-col>
     </b-row>
     <b-row class="spacing">
       <b-col md="6" offset-md="3">
           Category:
-        <select name="Category" class="form-control" v-model="category">
+        <select name="Category" class="form-control" v-model="category" >
           <option v-for="(option,i) in options" v-bind:key="i">{{option.value}}</option>
         </select>
       </b-col>
@@ -28,14 +28,15 @@
     <b-row class="spacing">
       <b-col md="6" offset-md="3">
           Difficulty Level:
-        <select name="difficultyLevel" class="form-control" v-model="difficultyLevel">
+        <select name="difficultyLevel" class="form-control" v-model="difficultyLevel" >
           <option v-for="(option,i) in difficulty" v-bind:key="i">{{option.level}}</option>
         </select>
       </b-col>
     </b-row>
     <b-row class="spacing">
       <b-col md="6" offset-md="3">
-          <input type="submit" @click="check">
+          <input type="submit" @click="check" >
+
       </b-col>
     </b-row>
   </b-container>
@@ -72,14 +73,14 @@ export default {
   },
   methods: {
       check: function(){
-          console.log(this.category)
-          console.log(this.numberOfQuestions)
-          console.log(this.numberOfSkips)
-          console.log(this.difficultyLevel)
-          var number
-          localStorage.setItem(number,this.numberOfQuestions)
-          var x=localStorage.getItem(number)
-          console.log(x)
+          if(this.category=="" || this.numberOfQuestions=="" || this.numberOfSkips=="" || this.difficultyLevel=="")
+          {
+              alert("Fill all the fields");
+          }
+          else{
+          localStorage.setItem("number",this.numberOfQuestions)
+          this.$router.push("/createcontesttext")
+          }
       }
   }
 };
