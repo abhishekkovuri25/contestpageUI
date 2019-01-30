@@ -1,4 +1,6 @@
 <template>
+<div>
+    <Nav></Nav>
   <div class="container">
     <div
       style="text-align:center; margin-top:80px; margin-bottom:30px; font-size:150%"
@@ -11,14 +13,20 @@
         </b-form-checkbox>
         <b-dd-divider></b-dd-divider>
       </div>
-      <button class="btn btn-info" @click="createContest">submit</button>
+      <button class="btn btn-info buttonColor" @click="createContest" >submit</button>
       <br>
     </b-card>
   </div>
+</div>
 </template>
 
 <script>
+import nav from "@/components/NavBar"
+
 export default {
+  components: {
+    Nav: nav
+  },
   data() {
     return {
       limiter: localStorage.getItem("number") * 0.4,
@@ -58,11 +66,10 @@ export default {
       limit = 0.4 * limit;
       if (this.selectedParks.length == limit) {
         var names = [];
-        for(var i=0;i<this.selectedParks.length;i++)
-        {
-            names.push(this.selectedParks[i]);   
+        for (var i = 0; i < this.selectedParks.length; i++) {
+          names.push(this.selectedParks[i]);
         }
-        localStorage.setItem("array",JSON.stringify(names))
+        localStorage.setItem("array", JSON.stringify(names));
         console.log(names);
         alert("Questions have been submitted!");
         this.$router.push("/createcontestimage");
@@ -73,3 +80,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.buttonColor{
+background-color:#28a745;
+}
+</style>

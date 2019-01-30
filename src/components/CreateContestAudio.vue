@@ -13,7 +13,7 @@
         </b-form-checkbox>
         <b-dd-divider></b-dd-divider>
       </div>
-      <button class="btn btn-info" @click="createContest">submit</button>
+      <button class="btn btn-info buttonColor" @click="createContest">submit</button>
       <br>
     </b-card>
   </div>
