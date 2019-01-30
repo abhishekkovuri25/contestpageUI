@@ -7,17 +7,17 @@
       >VIDEO BASED QUESTIONS</div>
       <div style="text-align:center; margin-bottom:40px; font-size:150%">Select Any {{ limiter }}</div>
       <b-card>
-        <div v-for="item in parks" :key="item.qid">
+        <div v-for="item in items" :key="item.qid">
           <b-form-checkbox :value="item" v-model="selectedParks">
             <label>
               {{item.name}} ||
-              <b-embed type="iframe" aspect="16by9" :src="item.description" allowfullscreen></b-embed>
+              <b-embed type="iframe" aspect="16by9" :src="item.questionContent" allowfullscreen></b-embed>
               || {{ item.answer }}
             </label>
           </b-form-checkbox>
           <b-dd-divider></b-dd-divider>
         </div>
-        <button class="btn btn-info buttonColor" @click="createContest">submit</button>
+        <button class="btn btn-info buttonColor" @click="createContest">Next</button>
         <br>
       </b-card>
     </div>
@@ -26,7 +26,7 @@
 
 <script>
 import nav from "@/components/NavBar";
-
+import Axios from "axios"
 export default {
   components: {
     Nav: nav
@@ -34,19 +34,7 @@ export default {
   data() {
     return {
       limiter: localStorage.getItem("number") * 0.2,
-      parks: [
-        {
-          qid: 121,
-          name: "Identify / xyz",
-          description: "https://www.youtube.com/embed/nPA2czkOsFE",
-          answer: "some answer"
-        },
-        {
-          qid: 122,
-          name: "Identify / xyz",
-          description: "https://www.youtube.com/embed/QtXby3twMmI",
-          answer: "some answer"
-        }
+      items: [
       ],
       selectedParks: []
     };
@@ -67,6 +55,20 @@ export default {
         alert("Please select " + limit + " questions!");
       }
     }
-  }
+  },
+  mounted() {
+      Axios.get(
+        "http://10.177.7.91:8080/screeningoutput/"+localStorage.getItem("categoryId")+"/getByQuestionType/Video",
+        {}
+      )
+        .then(response => {
+          this.items = response.data;
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+          console.log("FAILED !!!")
+        });
+    }
 };
 </script>

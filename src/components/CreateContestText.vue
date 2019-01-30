@@ -1,27 +1,30 @@
 <template>
-<div>
+  <div>
     <Nav></Nav>
-  <div class="container">
-    <div
-      style="text-align:center; margin-top:80px; margin-bottom:30px; font-size:150%"
-    >TEXT BASED QUESTIONS</div>
-    <div style="text-align:center; margin-bottom:40px; font-size:150%">Select Any {{ limiter }}</div>
-    <b-card>
-      <div v-for="item in parks" :key="item.qid">
-        <b-form-checkbox :value="item" v-model="selectedParks">
-          <label>{{item.question}} || {{item.answer}}</label>
-        </b-form-checkbox>
-        <b-dd-divider></b-dd-divider>
-      </div>
-      <button class="btn btn-info buttonColor" @click="createContest" >submit</button>
-      <br>
-    </b-card>
+    <div class="container">
+      <div
+        style="text-align:center; margin-top:80px; margin-bottom:30px; font-size:150%"
+      >TEXT BASED QUESTIONS</div>
+      <div style="text-align:center; margin-bottom:40px; font-size:150%">Select Any {{ limiter }}</div>
+      <b-card>
+        <div v-for="item in items" :key="item.questionId">
+          
+          <b-form-checkbox :value="item" v-model="selectedParks">
+            <label>{{item.questionName}} </label>
+          </b-form-checkbox>
+          <b-dd-divider></b-dd-divider>
+        </div>
+        <button class="btn btn-info buttonColor" @click="createContest">Next</button>
+        <br>
+        {{ selectedParks}}
+      </b-card>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
-import nav from "@/components/NavBar"
+import nav from "@/components/NavBar";
+import Axios from 'axios'
 
 export default {
   components: {
@@ -30,31 +33,13 @@ export default {
   data() {
     return {
       limiter: localStorage.getItem("number") * 0.4,
-      parks: [
+      items: [
         {
-          qid: 121,
-          question: "Some Question?",
-          answer: "ANSWER"
-        },
-        {
-          qid: 122,
-          question: "Some other question?",
-          answer: "ANSWER"
-        },
-        {
-          qid: 123,
-          question: "Some Question?",
-          answer: "ANSWER"
-        },
-        {
-          qid: 124,
-          question: "Some Question?",
-          answer: "ANSWER"
-        },
-        {
-          qid: 125,
-          question: "Some Question?",
-          answer: "ANSWER"
+          answerType: "",
+          duration: 0, 
+          questionId: "",
+          questionName: "",
+        
         }
       ],
       selectedParks: []
@@ -77,12 +62,26 @@ export default {
         alert("Please select " + limit + " questions!");
       }
     }
-  }
+  },
+  mounted() {
+      Axios.get(
+        "http://10.177.7.91:8080/screeningoutput/"+localStorage.getItem("categoryId")+"/getByQuestionType/Text",
+        {}
+      )
+        .then(response => {
+          this.items = response.data;
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+          console.log("FAILED !!!")
+        });
+    }
 };
 </script>
 
 <style>
-.buttonColor{
-background-color:#28a745;
+.buttonColor {
+  background-color: #28a745;
 }
 </style>

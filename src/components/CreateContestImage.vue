@@ -7,17 +7,16 @@
       >IMAGE BASED QUESTIONS</div>
       <div style="text-align:center; margin-bottom:40px; font-size:150%">Select Any {{ limiter }}</div>
       <b-card>
-        <div v-for="item in parks" :key="item.qid">
+        <div v-for="item in items" :key="item.qid">
           <b-form-checkbox :value="item" v-model="selectedParks">
             <label>
-              {{item.name}} ||
-              <img :src="item.description" width="150px" height="100px">
-              || {{ item.answer }}
+              {{item.questionName}} ||
+              <img :src="item.questionContent" width="150px" height="100px">
             </label>
           </b-form-checkbox>
           <b-dd-divider></b-dd-divider>
         </div>
-        <button class="btn btn-info buttonColor" @click="createContest">submit</button>
+        <button class="btn btn-info buttonColor" @click="createContest">Next</button>
         <br>
       </b-card>
     </div>
@@ -26,6 +25,7 @@
 
 <script>
 import nav from "@/components/NavBar";
+import Axios from "axios"
 
 export default {
   components: {
@@ -33,21 +33,8 @@ export default {
   },
   data() {
     return {
+      items:[],
       limiter: localStorage.getItem("number") * 0.2,
-      parks: [
-        {
-          qid: 121,
-          name: "Identify / xyz",
-          description: "https://cdn.urldecoder.org/assets/images/url_fb.png",
-          answer: "some answer"
-        },
-        {
-          qid: 122,
-          name: "Identify / xyz",
-          description: "https://cdn.urldecoder.org/assets/images/url_fb.png",
-          answer: "some answer"
-        }
-      ],
       selectedParks: []
     };
   },
@@ -69,6 +56,20 @@ export default {
         alert("Please select " + limit + " questions!");
       }
     }
-  }
+  },
+  mounted() {
+      Axios.get(
+        "http://10.177.7.91:8080/screeningoutput/"+localStorage.getItem("categoryId")+"/getByQuestionType/Image",
+        {}
+      )
+        .then(response => {
+          this.items = response.data;
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+          console.log("FAILED !!!")
+        });
+    }
 };
 </script>
