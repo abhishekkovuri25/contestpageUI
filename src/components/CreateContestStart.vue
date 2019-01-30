@@ -1,71 +1,71 @@
 <template>
-<div>
+  <div>
     <Nav></Nav>
-  <b-container class="margin" required>
-    <b-row>
-      <b-col md="4" offset-md="4" style="text-align:center; font-size:180%">Create Static Contest</b-col>
-    </b-row>
-    <b-row class="spacing">
-      <b-col md="6" offset-md="3">
-        Category:
-        <select name="Category" class="form-control" v-model="category">
-          <option v-for="(option,i) in options" v-bind:key="i">{{option.value}}</option>
-        </select>
-      </b-col>
-    </b-row>
-    <b-row class="spacing">
-      <b-col md="6" offset-md="3">
-        Contest Name:
-        <input
-          type="text"
-          name="contestName"
-          class="form-control"
-          v-model="contestName"
-        >
-      </b-col>
-    </b-row>
-    <b-row class="spacing">
-      <b-col md="6" offset-md="3">
-        Number of Questions:
-        <select
-          name="numberOfQuestions"
-          class="form-control"
-          v-model="numberOfQuestions"
-        >
-          <option v-for="(option,i) in number" v-bind:key="i">{{option.num}}</option>
-        </select>
-      </b-col>
-    </b-row>
-    <b-row class="spacing">
-      <b-col md="6" offset-md="3">
-        Number of Allowed Skips:
-        <input
-          type="text"
-          name="Category"
-          class="form-control"
-          v-model="numberOfSkips"
-        >
-      </b-col>
-    </b-row>
-    <b-row class="spacing">
-      <b-col md="6" offset-md="3">
-        Difficulty Level:
-        <select
-          name="difficultyLevel"
-          class="form-control"
-          v-model="difficultyLevel"
-        >
-          <option v-for="(option,i) in difficulty" v-bind:key="i">{{option.level}}</option>
-        </select>
-      </b-col>
-    </b-row>
-    <b-row class="spacing">
-      <b-col md="6" offset-md="3">
-        <input type="submit" @click="check">
-      </b-col>
-    </b-row>
-  </b-container>
-</div>
+    <b-container class="margin" required>
+      <b-row>
+        <b-col md="4" offset-md="4" style="text-align:center; font-size:180%">Create Static Contest</b-col>
+      </b-row>
+      <b-row class="spacing">
+        <b-col md="6" offset-md="3">
+          Category:
+          <select name="Category" class="form-control" v-model="category">
+            <option v-for="(option,i) in options" v-bind:key="i">{{option.value}}</option>
+          </select>
+        </b-col>
+      </b-row>
+      <b-row class="spacing">
+        <b-col md="6" offset-md="3">
+          Contest Name:
+          <input
+            type="text"
+            name="contestName"
+            class="form-control"
+            v-model="contestName"
+          >
+        </b-col>
+      </b-row>
+      <b-row class="spacing">
+        <b-col md="6" offset-md="3">
+          Number of Questions:
+          <select
+            name="numberOfQuestions"
+            class="form-control"
+            v-model="numberOfQuestions"
+          >
+            <option v-for="(option,i) in number" v-bind:key="i">{{option.num}}</option>
+          </select>
+        </b-col>
+      </b-row>
+      <b-row class="spacing">
+        <b-col md="6" offset-md="3">
+          Number of Allowed Skips:
+          <input
+            type="text"
+            name="Category"
+            class="form-control"
+            v-model="numberOfSkips"
+          >
+        </b-col>
+      </b-row>
+      <b-row class="spacing">
+        <b-col md="6" offset-md="3">
+          Difficulty Level:
+          <select
+            name="difficultyLevel"
+            class="form-control"
+            v-model="difficultyLevel"
+          >
+            <option v-for="(option,i) in difficulty" v-bind:key="i">{{option.level}}</option>
+          </select>
+        </b-col>
+      </b-row>
+      <b-row class="spacing">
+        <b-col md="6" offset-md="3">
+          <input type="submit" value="Next" @click="check">
+        </b-col>
+      </b-row>
+    </b-container>
+  </div>
 </template>
 
 <script>
@@ -124,11 +124,12 @@ export default {
         alert("Fill all the fields");
       } else {
         localStorage.setItem("number", this.numberOfQuestions);
+        localStorage.setItem("categoryId",this.category);
         Axios.post(
-          "http://10.177.7.120:8080/contests/",
+          "http://10.177.7.110:8080/contests/",
           {
             request: {
-              active: true,
+              active: false,
               categoryId: this.category,
               contestId: "",
               difficulty: this.difficultyLevel,
@@ -147,7 +148,7 @@ export default {
           }
         )
           .then(response => {
-            console.log(response.data);
+            localStorage.setItem("contestId",response.data.response.contestId);
             this.$router.push("/createcontesttext");
           })
           .catch(error => {
@@ -159,7 +160,6 @@ export default {
     }
   }
 };
-
 </script>
 
 

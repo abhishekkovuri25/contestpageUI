@@ -5,36 +5,28 @@
       </div>
       <div style="text-align:center; margin-bottom:40px; font-size:150%"> Select Any {{ limiter }} </div>
     <b-card>
-      <div v-for="item in parks" :key="item.qid">
+      <div v-for="item in items" :key="item.qid">
         <b-form-checkbox :value="item" v-model="selectedParks">
-          <label>{{item.name}} || <audio controls><source :src="item.description" type="audio/mpeg"></audio> || {{ item.answer }} 
+          <label>{{item.questionName}} <audio controls><source :src="item.questionContent" type="audio/mpeg"></audio>  
   
    </label>
         </b-form-checkbox>
         <b-dd-divider></b-dd-divider>
       </div>
-      <button class="btn btn-info buttonColor" @click="createContest">submit</button>
+      <button class="btn btn-info buttonColor" @click="createContest">Submit</button>
       <br>
     </b-card>
   </div>
 </template>
 
 <script>
+ import Axios from "axios";
+
 export default {
   data() {
     return {
         limiter : localStorage.getItem("number")*0.2 ,
-      parks: [
-        {
-          qid: 121,
-          name: "Identify / xyz",
-          description: "https://www.quizfreak.com/uploads/3319-35085.m4a",answer: "some answer"
-        },
-        {
-          qid: 122,
-          name: "Identify / xyz",
-          description: "https://www.quizfreak.com/uploads/3319-35085.m4a",answer: "some answer"
-        }
+      items: [
       ],
       selectedParks: []
     };
@@ -51,12 +43,37 @@ export default {
         }
         localStorage.setItem("array",JSON.stringify(names));
         alert(" The contest was created");
-        this.$router.push("/");
+        Axios.post("http://10.177.7.110:8080/contests/"+localStorage.getItem("contestId")+"/questions/",{
+          request: JSON.parse(localStorage.getItem("array")),
+  userId: "admin"
+        })
+        .then(response => {
+          localStorage.clear();
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log("Failed!!!!");
+        });
+        this.$router.push("/createcontesttype");
         }
       else{
           alert("Please select " + limit + " questions!");
       }
       }
+    },
+    mounted() {
+      Axios.get(
+        "http://10.177.7.91:8080/screeningoutput/"+localStorage.getItem("categoryId")+"/getByQuestionType/Audio",
+        {}
+      )
+        .then(response => {
+          this.items = response.data;
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+          console.log("FAILED !!!")
+        });
     }
 };
 </script>

@@ -15,7 +15,7 @@
     </b-row>
     <b-row class="spacing">
       <b-col md="6" offset-md="3">
-        <input type="submit" @click="check">
+        <input type="submit" value="Next" @click="check">
       </b-col>
     </b-row>
     </b-container>
