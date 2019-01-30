@@ -1,4 +1,6 @@
 <template>
+<div>
+    <Nav></Nav>
   <b-container class="margin" required>
     <b-row>
       <b-col md="4" offset-md="4" style="text-align:center; font-size:180%">Create Dynamic Contest</b-col>
@@ -35,11 +37,16 @@
       </b-col>
     </b-row>
   </b-container>
+</div>
 </template>
 
 <script>
 import Axios from "axios";
+import nav from "@/components/NavBar"
 export default {
+    components: {
+    Nav: nav
+  },
   data() {
     return {
       contestName: "",
@@ -51,7 +58,7 @@ export default {
     check: function() {
       if (
         this.contestName == ""||
-        this.time == "--:--:--"
+        this.time == ""
       ) {
         alert("Fill all the fields");
       } else {

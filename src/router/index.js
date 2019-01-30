@@ -51,6 +51,16 @@ export default new Router({
       path: '/createcontestaudio',
       name: 'CreateContestAudio',
       component: CreateContestAudio
+    },
+    {
+      path: '/createcontesttype',
+      name: 'CreateContestType',
+      component: CreateContestType
+    },
+    {
+      path: '/createcontestdynamic',
+      name: 'CreateContestDynamic',
+      component: CreateContestDynamic
     }
   ]
 })

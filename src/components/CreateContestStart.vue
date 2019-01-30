@@ -1,7 +1,9 @@
 <template>
+<div>
+    <Nav></Nav>
   <b-container class="margin" required>
     <b-row>
-      <b-col md="4" offset-md="4" style="text-align:center; font-size:180%">Create Contest</b-col>
+      <b-col md="4" offset-md="4" style="text-align:center; font-size:180%">Create Static Contest</b-col>
     </b-row>
     <b-row class="spacing">
       <b-col md="6" offset-md="3">
@@ -63,11 +65,18 @@
       </b-col>
     </b-row>
   </b-container>
+</div>
 </template>
 
 <script>
 import Axios from "axios";
+import nav from "@/components/NavBar";
+
 export default {
+  name: "app",
+  components: {
+    Nav: nav
+  },
   data() {
     return {
       category: "",
@@ -87,9 +96,22 @@ export default {
           text: "Music"
         }
       ],
+      requester: {
+        request: {
+          active: true,
+          categoryId: this.category,
+          contestId: "",
+          difficulty: this.difficultyLevel,
+          name: this.contestName,
+          noOfQuestions: Number(this.numberOfQuestions),
+          skips: this.numberOfSkips,
+          subscribed: false,
+          type: "static"
+        },
+        userId: this.userId
+      },
       number: [{ num: 10 }, { num: 20 }],
-      difficulty: [{ level: "High" }, { level: "Medium" }, { level: "Low" }],
-      types: [{ type: "dynamic" }, { type: "static" }]
+      difficulty: [{ level: "High" }, { level: "Medium" }, { level: "Low" }]
     };
   },
   methods: {
@@ -99,49 +121,49 @@ export default {
         this.numberOfQuestions == "" ||
         this.numberOfSkips == "" ||
         this.difficultyLevel == "" ||
-        this.type == "" ||
-        this.contestName == ""||
-        this.time == ""
+        this.contestName == ""
       ) {
         alert("Fill all the fields");
       } else {
         localStorage.setItem("number", this.numberOfQuestions);
-          Axios.post(
-            "http://10.177.7.120:8080/contests/",
-            {
-              request: {
-                active: true,
-                categoryId: this.category,
-                contestId: "",
-                difficulty: this.difficultyLevel,
-                name: this.contestName,
-                noOfQuestions: Number(this.numberOfQuestions),
-                skips: this.numberOfSkips,
-                subscribed: false,
-                type: this.type
-              },
-              userId: this.userId
+        Axios.post(
+          "http://10.177.7.110:8080/contests/",
+          {
+            request: {
+              active: true,
+              categoryId: this.category,
+              contestId: "",
+              difficulty: this.difficultyLevel,
+              name: this.contestName,
+              noOfQuestions: Number(this.numberOfQuestions),
+              skips: this.numberOfSkips,
+              subscribed: false,
+              type: "static"
             },
-            {
-              headers: {
-                "Content-Type": "application/json"
-              }
+            userId: this.userId
+          },
+          {
+            headers: {
+              "Content-Type": "application/json"
             }
-          )
-            .then(response => {
-              console.log(response.data);
-              this.$router.push("/createcontesttext");
-            })
-            .catch(error => {
-              console.log("cannot create contest");
-              console.log(error);
-              //this.$router.push('/Admin/login')
-            });
+          }
+        )
+          .then(response => {
+            console.log(response.data);
+            this.$router.push("/createcontesttext");
+          })
+          .catch(error => {
+            console.log("cannot create contest");
+            console.log(error);
+            //this.$router.push('/Admin/login')
+          });
       }
     }
   }
 };
+
 </script>
+
 
 
 <style scoped>

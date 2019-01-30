@@ -1,5 +1,6 @@
 <template>
 <div>
+    <Nav></Nav>
   <b-container class="margin">
      <b-row>
       <b-col md="4" offset-md="4" style="text-align:center; font-size:180%">Select the Type of Contest</b-col>
@@ -21,7 +22,13 @@
     </div>
 </template>
 <script>
+import nav from "@/components/NavBar"
+
 export default {
+
+    components: {
+    Nav: nav
+  },
 data(){
   return {
     type:"",
@@ -48,4 +55,5 @@ methods: {
 .spacing {
   margin-top: 20px;
 }
+</style>
 </style>

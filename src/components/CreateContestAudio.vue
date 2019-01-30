@@ -1,26 +1,33 @@
 <template>
+<div>
+    <Nav></Nav>
   <div class="container">
       <div style="text-align:center; margin-top:80px; margin-bottom:30px; font-size:150%">
-            AUDIO BASED QUESTIONS 
+            AUDIO BASED QUESTIONS
       </div>
       <div style="text-align:center; margin-bottom:40px; font-size:150%"> Select Any {{ limiter }} </div>
     <b-card>
       <div v-for="item in parks" :key="item.qid">
         <b-form-checkbox :value="item" v-model="selectedParks">
-          <label>{{item.name}} || <audio controls><source :src="item.description" type="audio/mpeg"></audio> || {{ item.answer }} 
-  
+          <label>{{item.name}} || <audio controls><source :src="item.description" type="audio/mpeg"></audio> || {{ item.answer }}
+
    </label>
         </b-form-checkbox>
         <b-dd-divider></b-dd-divider>
       </div>
-      <button class="btn btn-info" @click="createContest">submit</button>
+      <button class="btn btn-info buttonColor" @click="createContest">submit</button>
       <br>
     </b-card>
   </div>
+</div>
 </template>
 
 <script>
+import nav from "@/components/NavBar";
 export default {
+   components: {
+    Nav: nav
+  },
   data() {
     return {
         limiter : localStorage.getItem("number")*0.2 ,
@@ -47,7 +54,7 @@ export default {
       if (this.selectedParks.length == limit) {
         for (var i = 0; i < this.selectedParks.length; i++) {
             names.push(this.selectedParks[i])
-          
+
         }
         localStorage.setItem("array",JSON.stringify(names));
         alert(" The contest was created");
