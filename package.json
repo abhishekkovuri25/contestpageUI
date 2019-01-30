@@ -14,10 +14,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "bootstrap": "^4.2.1",
-=======
->>>>>>> 0d3e3ebb64532b69f3a6d292d27cc07f0c1e2907
+    "axios": "^0.18.0",
     "bootstrap-vue": "^2.0.0-rc.11",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
