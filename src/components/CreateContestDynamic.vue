@@ -62,9 +62,9 @@ export default {
         console.log(this.contestName);
         console.log(Date.parse(this.startTime));
 
-var date = new Date(Date.parse(this.startTime));
+        var date = new Date(Date.parse(this.startTime));
 
-console.log(date.toString("MMM dd"));
+        console.log(date.toString("MMM dd"));
         Axios.post(
           "http://10.177.7.115:8080/contests/",
           {
@@ -85,7 +85,11 @@ console.log(date.toString("MMM dd"));
         )
           .then(response => {
             console.log(response.data);
-            this.$router.push("/createcontesttext");
+            localStorage.setItem(
+              "contestIdDynamic",
+              response.data.response.contestId
+            );
+            this.$router.push("/createcontestdynamicquestions");
           })
           .catch(error => {
             console.log("cannot create contest");

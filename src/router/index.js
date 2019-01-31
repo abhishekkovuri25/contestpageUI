@@ -9,7 +9,8 @@ import CreateContestImage from '@/components/CreateContestImage'
 import CreateContestVideo from '@/components/CreateContestVideo'
 import CreateContestAudio from '@/components/CreateContestAudio'
 import CreateContestDynamic from '@/components/CreateContestDynamic'
-import CreateContestType from '@/components/CreateContestType'
+import CreateContestDynamicQuestions from '@/components/CreateContestDynamicQuestions'
+
 Vue.use(BootstrapVue);
 Vue.use(Router)
 Vue.use(BootstrapVue)
@@ -61,6 +62,11 @@ export default new Router({
       path: '/createcontestdynamic',
       name: 'CreateContestDynamic',
       component: CreateContestDynamic
+    },
+    {
+      path: '/createcontestdynamicquestions',
+      name: 'CreateContestDynamicQuestions',
+      component: CreateContestDynamicQuestions
     }
   ]
 })
