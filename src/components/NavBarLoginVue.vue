@@ -12,24 +12,9 @@
             <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
           </b-nav-form> -->
           <b-navbar-nav style="font-size:large">
-          <b-nav-item router-link to="/screencontest"><b>Screen Questions</b></b-nav-item>
-          <b-nav-item router-link to="/createcontesttype"><b>Create Contest</b></b-nav-item>
-          <b-nav-item router-link to="/leaderboard"><b>Leaderboard</b></b-nav-item>
-          <b-nav-item @click="check"><b>Logout</b></b-nav-item>
         </b-navbar-nav>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
   </div>
 </template>
-
-<script>
-export default {
-  methods: {
-    check: function(){
-    localStorage.clear();
-    this.$router.push("/");
-  }
-}
-}
-</script>
