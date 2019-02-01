@@ -10,6 +10,11 @@ import CreateContestVideo from '@/components/CreateContestVideo'
 import CreateContestAudio from '@/components/CreateContestAudio'
 import CreateContestDynamic from '@/components/CreateContestDynamic'
 import CreateContestDynamicQuestions from '@/components/CreateContestDynamicQuestions'
+import ScreenContest from '@/components/ScreenContest'
+import Home from '@/components/Home'
+import LeaderBoard from '@/components/LeaderBoard'
+import Login from '@/components/Login'
+import CreateContestType from '@/components/CreateContestType'
 
 Vue.use(BootstrapVue);
 Vue.use(Router)
@@ -67,6 +72,26 @@ export default new Router({
       path: '/createcontestdynamicquestions',
       name: 'CreateContestDynamicQuestions',
       component: CreateContestDynamicQuestions
+    },
+    {
+      path: '/screencontest',
+      name: 'ScreenContest',
+      component: ScreenContest
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/leaderboard',
+      name: 'LeaderBoard',
+      component : LeaderBoard
+    },
+    {
+      path: '/',
+      name: 'Login',
+      component: Login
     }
   ]
 })
